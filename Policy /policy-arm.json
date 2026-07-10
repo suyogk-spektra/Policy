@@ -100,7 +100,7 @@
           },
           {
             "not": {
-              "field": "Microsoft.CognitiveServices/accounts/kind",
+              "field": "kind",
               "equals": "OpenAI"
             }
           }
