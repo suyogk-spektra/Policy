@@ -1,1 +1,202 @@
-
+{
+  "if": {
+    "anyOf": [
+      {
+        "not": {
+          "anyOf": [
+            {
+              "field": "type",
+              "like": "Microsoft.ApiManagement/service/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.App/containerApps/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.App/managedEnvironments/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.CognitiveServices/accounts/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.Compute/disks/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.Compute/virtualMachines/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.Compute/virtualMachines/extensions/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.ContainerRegistry/registries/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.DocumentDB/databaseAccounts/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.Network/networkInterfaces/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.Network/networkSecurityGroups/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.Network/publicIPAddresses/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.Network/virtualNetworks/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.OperationalInsights/workspaces/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.Search/searchServices/*"
+            },
+            {
+              "field": "type",
+              "like": "Microsoft.Storage/storageAccounts/*"
+            },
+            {
+              "field": "type",
+              "in": [
+                "Microsoft.ApiManagement/service",
+                "Microsoft.App/containerApps",
+                "Microsoft.App/managedEnvironments",
+                "Microsoft.CognitiveServices/accounts",
+                "Microsoft.Compute/disks",
+                "Microsoft.Compute/virtualMachines",
+                "Microsoft.Compute/virtualMachines/extensions",
+                "Microsoft.ContainerRegistry/registries",
+                "Microsoft.DocumentDB/databaseAccounts",
+                "Microsoft.Network/networkInterfaces",
+                "Microsoft.Network/networkSecurityGroups",
+                "Microsoft.Network/publicIPAddresses",
+                "Microsoft.Network/virtualNetworks",
+                "Microsoft.OperationalInsights/workspaces",
+                "Microsoft.Search/searchServices",
+                "Microsoft.Storage/storageAccounts"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.CognitiveServices/accounts"
+          },
+          {
+            "not": {
+              "field": "Microsoft.CognitiveServices/accounts/kind",
+              "equals": "OpenAI"
+            }
+          }
+        ]
+      },
+      {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Compute/disks"
+          },
+          {
+            "not": {
+              "field": "Microsoft.Compute/disks/Sku.Tier",
+              "in": [
+                "Premium"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Compute/virtualMachines"
+          },
+          {
+            "not": {
+              "allOf": [
+                {
+                  "field": "Microsoft.Compute/virtualMachines/imageOffer",
+                  "in": [
+                    "WindowsServer"
+                  ]
+                },
+                {
+                  "field": "Microsoft.Compute/virtualMachines/imagePublisher",
+                  "in": [
+                    "MicrosoftWindowsServer"
+                  ]
+                },
+                {
+                  "field": "Microsoft.Compute/virtualMachines/imageSku",
+                  "in": [
+                    "2022-datacenter-azure-edition"
+                  ]
+                },
+                {
+                  "field": "Microsoft.Compute/virtualMachines/sku.name",
+                  "in": [
+                    "Standard_D4s_v3"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.ContainerRegistry/registries"
+          },
+          {
+            "field": "Microsoft.ContainerRegistry/registries/sku.name",
+            "notIn": [
+              "Basic"
+            ]
+          }
+        ]
+      },
+      {
+        "allOf": [
+          {
+            "source": "action",
+            "equals": "Microsoft.Storage/storageAccounts/write"
+          },
+          {
+            "field": "type",
+            "equals": "Microsoft.Storage/storageAccounts"
+          },
+          {
+            "not": {
+              "field": "Microsoft.Storage/storageAccounts/sku.name",
+              "in": [
+                "StandardLRS"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "then": {
+    "effect": "deny"
+  }
+}
