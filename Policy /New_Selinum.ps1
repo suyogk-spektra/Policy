@@ -106,7 +106,6 @@ if ($project) {
 
     $body = @{
         name         = $ProjectName
-        description  = 'Selenium lab project (replacement for Azure DevOps Demo Generator)'
         visibility   = 'private'
         capabilities = @{
             versioncontrol  = @{ sourceControlType = 'Git' }
@@ -252,7 +251,7 @@ $buildJson = @'
   "jobCancelTimeoutInMinutes": 5,
   "process": {
     "type": 1,
-    "target": { "agentSpecification": { "identifier": "windows-2022" } },
+    "target": { "agentSpecification": { "identifier": "windows-2019" } },
     "phases": [
       {
         "name": "Phase 1",
@@ -264,9 +263,9 @@ $buildJson = @'
         "steps": [
           {
             "enabled": true, "continueOnError": false, "alwaysRun": false, "timeoutInMinutes": 0,
-            "displayName": "Use NuGet 6.x", "refName": "NuGetToolInstaller1",
+            "displayName": "Use NuGet 4.3.0", "refName": "NuGetToolInstaller1",
             "task": { "id": "2c65196a-54fd-4a02-9be8-d9d1837b7c5d", "versionSpec": "0.*", "definitionType": "task" },
-            "inputs": { "versionSpec": "6.x", "checkLatest": "true" }
+            "inputs": { "versionSpec": "4.3.0", "checkLatest": "false" }
           },
           __CHROMEDRIVER_BUILD_TASK__,
           {
@@ -604,4 +603,3 @@ Write-Host "Project  : $devUrl/$([uri]::EscapeDataString($ProjectName))"
 Write-Host "Repo     : $($repo.webUrl)"
 Write-Host "Build    : $devUrl/$([uri]::EscapeDataString($ProjectName))/_build?definitionId=$($buildDef.id)"
 Write-Host "Release  : $devUrl/$([uri]::EscapeDataString($ProjectName))/_release?definitionId=$($relDef.id)"
-Write-Host "`nContinue the lab from Exercise 4 > Task 2 (Configure agent on the VM)." -ForegroundColor Green
